@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -12,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 const questionsList = [
   {
     id: 1,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
     text: 'Any recommendations for hostels with a social vibe in Bangkok?',
     tags: [{ name: 'hostel' }, { name: 'accommodation' }],
     answers: 10,
@@ -20,7 +19,7 @@ const questionsList = [
   },
   {
     id: 2,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
     text: "What's the best way to get from the airport to downtown Bangkok at night?",
     tags: [{ name: 'transportation' }],
     answers: 3,
@@ -28,7 +27,7 @@ const questionsList = [
   },
   {
     id: 3,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
     text: 'Is Uber available in Bangkok, or should I use another ride-sharing service?',
     tags: [{ name: 'transportation' }],
     answers: 6,
@@ -36,7 +35,7 @@ const questionsList = [
   },
   {
     id: 4,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
     text: 'Are there any local music festivals happening in Bangkok next month?',
     tags: [{ name: 'event' }, { name: 'music festival' }],
     answers: 3,
@@ -44,7 +43,7 @@ const questionsList = [
   },
   {
     id: 5,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
     text: 'Are there any good vegan restaurants in Bangkok?',
     tags: [{ name: 'food' }, { name: 'vegan' }, { name: 'restaurants' }],
     answers: 2,

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import CountrySelector from './CountrySelector';
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
 interface HeaderProps {
   selectedCountry: string;
@@ -18,13 +19,10 @@ const Header: React.FC<HeaderProps> = ({ selectedCountry, onCountryChange }) => 
           <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
         </div>
         
-        <div className="w-8 h-8 rounded-full bg-gray-300 ml-3 overflow-hidden">
-          <img 
-            src="/placeholder.svg" 
-            alt="Profile" 
-            className="w-full h-full object-cover" 
-          />
-        </div>
+        <Avatar className="h-8 w-8 ml-3">
+          <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="Profile" />
+          <AvatarFallback>U</AvatarFallback>
+        </Avatar>
       </div>
     </header>
   );

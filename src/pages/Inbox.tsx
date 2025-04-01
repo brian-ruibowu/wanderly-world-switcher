@@ -31,7 +31,7 @@ const notificationsData: Notification[] = [
     answer: {
       id: 1,
       author: 'Davika Hoorne',
-      avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
       text: 'Try Chinatown (Yaowarat) at night, Or Tong Lo Soi 38 for amazing street food without the tourist crowds!',
       yearsInLocation: 8
     },
@@ -45,7 +45,7 @@ const notificationsData: Notification[] = [
     answer: {
       id: 2,
       author: 'Mario Maurer',
-      avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
       text: 'Airport Rail Link runs until midnight and is the fastest way to avoid traffic. After that, use Grab or the official airport taxis.',
       yearsInLocation: 9
     },
@@ -86,7 +86,7 @@ const Inbox: React.FC = () => {
           </div>
           
           <Avatar className="h-8 w-8">
-            <AvatarImage src="https://randomuser.me/api/portraits/women/32.jpg" alt="User" />
+            <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </div>
@@ -111,7 +111,7 @@ const Inbox: React.FC = () => {
             {notification.type === 'answer' && notification.answer && (
               <div className="flex items-center mt-2">
                 <Avatar className="h-9 w-9 mr-3">
-                  <AvatarImage src={notification.answer.avatar} alt={notification.answer.author} />
+                  <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt={notification.answer.author} />
                   <AvatarFallback>{notification.answer.author[0]}</AvatarFallback>
                 </Avatar>
                 <div>

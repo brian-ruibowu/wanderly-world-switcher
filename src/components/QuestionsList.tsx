@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 interface Tag {
   name: string;
@@ -36,9 +37,10 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
           onClick={() => handleQuestionClick(question.id)}
         >
           <div className="flex items-start">
-            <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
-              <img src={question.avatar} alt="User avatar" className="w-full h-full object-cover" />
-            </div>
+            <Avatar className="h-10 w-10 mr-3 flex-shrink-0">
+              <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="User avatar" />
+              <AvatarFallback>U</AvatarFallback>
+            </Avatar>
             <div className="flex-grow">
               <p className="text-sm font-medium mb-2">{question.text}</p>
               <div className="flex flex-wrap gap-2 mb-2">

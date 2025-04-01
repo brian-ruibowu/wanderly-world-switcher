@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -66,7 +65,7 @@ const answersData = {
     {
       id: 2,
       author: "Mario Maurer",
-      avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
       text: "I really love Khun Churn! It's an authentic Thai restaurant with a fully plant-based menu. The environment is super nice as well, there are many plants in the restaurant. Remember to make reservation at least one week before hand.",
       likeCount: 3,
       endorseCount: 1,
@@ -77,7 +76,7 @@ const answersData = {
     {
       id: 3,
       author: "Davika Hoorne",
-      avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
       text: "Lub d Bangkok Silom is amazing for social travelers! They have communal spaces and organize events. Also check out Here Hostel and Yard Hostel - both have great vibes and you'll meet lots of people.",
       likeCount: 5,
       endorseCount: 3,
@@ -174,7 +173,7 @@ const QuestionPreview = () => {
           </div>
           
           <Avatar className="h-8 w-8">
-            <AvatarImage src="https://randomuser.me/api/portraits/women/32.jpg" alt="User" />
+            <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </div>
@@ -216,7 +215,7 @@ const QuestionPreview = () => {
             {/* Answer author info */}
             <div className="flex items-center mb-2">
               <Avatar className="h-10 w-10 mr-3">
-                <AvatarImage src={answer.avatar} alt={answer.author} />
+                <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt={answer.author} />
                 <AvatarFallback>{answer.author[0]}</AvatarFallback>
               </Avatar>
               <div>
