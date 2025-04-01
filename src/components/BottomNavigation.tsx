@@ -37,9 +37,9 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
   };
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2">
+    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 grid grid-cols-5 py-2">
       <button 
-        className={`flex flex-col items-center p-2 ${activeTab === 'home' || location.pathname === '/' ? 'text-orange-400' : 'text-gray-500'}`}
+        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'home' || location.pathname === '/' ? 'text-orange-400' : 'text-gray-500'}`}
         onClick={() => handleTabClick('home')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -49,7 +49,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
       </button>
       
       <button 
-        className={`flex flex-col items-center p-2 ${activeTab === 'help' ? 'text-orange-400' : 'text-gray-500'}`}
+        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'help' ? 'text-orange-400' : 'text-gray-500'}`}
         onClick={() => handleTabClick('help')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -58,21 +58,20 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
         <span className="text-xs">Help Travelers</span>
       </button>
 
-      <div className="relative">
+      <div className="flex flex-col items-center justify-center relative">
         <button 
-          className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-orange-400 rounded-full p-3"
+          className="absolute -top-5 transform -translate-y-1/2 bg-orange-400 rounded-full p-3"
           onClick={handleAskClick}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </button>
-        <div className="h-6"></div>
-        <span className="text-xs text-gray-500 block mt-4">Ask</span>
+        <span className="text-xs text-gray-500 mt-6">Ask</span>
       </div>
       
       <button 
-        className={`flex flex-col items-center p-2 ${activeTab === 'chat' ? 'text-orange-400' : 'text-gray-500'}`}
+        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'chat' ? 'text-orange-400' : 'text-gray-500'}`}
         onClick={() => handleTabClick('chat')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -82,7 +81,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
       </button>
       
       <button 
-        className={`flex flex-col items-center p-2 ${activeTab === 'my_questions' || location.pathname === '/inbox' ? 'text-orange-400' : 'text-gray-500'}`}
+        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'my_questions' || location.pathname === '/inbox' ? 'text-orange-400' : 'text-gray-500'}`}
         onClick={() => handleTabClick('my_questions')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
