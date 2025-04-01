@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
@@ -6,6 +7,7 @@ import ExploreSections from '../components/ExploreSections';
 import UpcomingEvents from '../components/UpcomingEvents';
 import BottomNavigation from '../components/BottomNavigation';
 import { useToast } from "@/hooks/use-toast";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Sample data for questions
 const questionsList = [
@@ -77,17 +79,21 @@ const Index = () => {
     setSelectedCountry(country);
     toast({
       description: `Changed location to ${country}`,
-      duration: 2000,
+      duration: 1000,
     });
   };
 
   return (
-    <div className="max-w-md mx-auto bg-gray-50 min-h-screen pb-16">
+    <div className="max-w-md mx-auto bg-gray-50 min-h-screen pb-16 overflow-hidden">
       <Header selectedCountry={selectedCountry} onCountryChange={handleCountryChange} />
-      <SearchBar selectedCountry={selectedCountry} />
-      <QuestionsList questions={questionsList} />
-      <ExploreSections selectedCountry={selectedCountry} />
-      <UpcomingEvents selectedCountry={selectedCountry} events={eventsList} />
+      <ScrollArea className="h-[calc(100vh-64px)]">
+        <div className="pb-16">
+          <SearchBar selectedCountry={selectedCountry} />
+          <QuestionsList questions={questionsList} />
+          <ExploreSections selectedCountry={selectedCountry} />
+          <UpcomingEvents selectedCountry={selectedCountry} events={eventsList} />
+        </div>
+      </ScrollArea>
       <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />
     </div>
   );
