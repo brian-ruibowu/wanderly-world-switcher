@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -7,6 +8,12 @@ interface BottomNavigationProps {
 }
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabChange }) => {
+  const navigate = useNavigate();
+  
+  const handleAskClick = () => {
+    navigate('/ask');
+  };
+  
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around py-2">
       <button 
@@ -30,11 +37,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
       </button>
 
       <div className="relative">
-        <div className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-orange-400 rounded-full p-3">
+        <button 
+          className="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-orange-400 rounded-full p-3"
+          onClick={handleAskClick}
+        >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-        </div>
+        </button>
         <div className="h-6"></div>
         <span className="text-xs text-gray-500 block mt-4">Ask</span>
       </div>
