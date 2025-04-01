@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import AskQuestion from "./pages/AskQuestion";
 import QuestionPreview from "./pages/QuestionPreview";
+import Inbox from "./pages/Inbox";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/ask" element={<AskQuestion />} />
           <Route path="/question/:questionId" element={<QuestionPreview />} />
+          <Route path="/inbox" element={<Inbox />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
