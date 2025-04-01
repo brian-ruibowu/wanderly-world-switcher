@@ -1,16 +1,19 @@
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ArrowLeft, MessageCircle, Heart, ThumbsUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+
+// Sample avatar URL to be used consistently across the app
+const profileImageUrl = "https://randomuser.me/api/portraits/women/44.jpg";
 
 // Sample data for questions and answers
 const questionsData = [
   {
     id: 1,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: profileImageUrl,
     text: 'Any recommendations for hostels with a social vibe in Bangkok?',
     tags: [{ name: 'hostel' }, { name: 'accommodation' }],
     answers: 10,
@@ -18,7 +21,7 @@ const questionsData = [
   },
   {
     id: 2,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: profileImageUrl,
     text: "What's the best way to get from the airport to downtown Bangkok at night?",
     tags: [{ name: 'transportation' }],
     answers: 3,
@@ -26,7 +29,7 @@ const questionsData = [
   },
   {
     id: 3,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: profileImageUrl,
     text: 'Is Uber available in Bangkok, or should I use another ride-sharing service?',
     tags: [{ name: 'transportation' }],
     answers: 6,
@@ -34,7 +37,7 @@ const questionsData = [
   },
   {
     id: 4,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
+    avatar: profileImageUrl,
     text: 'Are there any local music festivals happening in Bangkok next month?',
     tags: [{ name: 'event' }, { name: 'music festival' }],
     answers: 3,
@@ -42,41 +45,44 @@ const questionsData = [
   },
   {
     id: 5,
-    avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
-    text: 'Are there any good vegan restaurants in Bangkok?',
-    tags: [{ name: 'food' }, { name: 'vegan' }, { name: 'restaurants' }],
-    answers: 2,
+    avatar: profileImageUrl,
+    text: 'Where can I find authentic, non-touristy street food in Bangkok?',
+    tags: [{ name: 'food' }, { name: 'street food' }],
+    answers: 0,
     following: 24
+  }
+];
+
+// Sample local experts
+const localExperts = [
+  {
+    id: 1,
+    name: "Urassaya Sperbund",
+    avatar: profileImageUrl,
+    yearsInLocation: 12
+  },
+  {
+    id: 2,
+    name: "Mario Maurer",
+    avatar: profileImageUrl,
+    yearsInLocation: 9
+  },
+  {
+    id: 3,
+    name: "Davika Hoorne",
+    avatar: profileImageUrl,
+    yearsInLocation: 15
   }
 ];
 
 // Sample answers data
 const answersData = {
-  5: [
-    {
-      id: 1,
-      author: "Urassaya Sperbund",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      text: "Absolutely! Bangkok has a fantastic vegan food scene. Check out May Veggie Home (amazing Thai vegan dishes), Broccoli Revolution (trendy spot with global flavors), and Vistro Bangkok (creative plant-based comfort food). For street food vibes, try the vegan stalls at Chatuchak Market!",
-      likeCount: 2,
-      endorseCount: 2,
-      yearsInLocation: 12
-    },
-    {
-      id: 2,
-      author: "Mario Maurer",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-      text: "I really love Khun Churn! It's an authentic Thai restaurant with a fully plant-based menu. The environment is super nice as well, there are many plants in the restaurant. Remember to make reservation at least one week before hand.",
-      likeCount: 3,
-      endorseCount: 1,
-      yearsInLocation: 9
-    }
-  ],
+  5: [],
   1: [
     {
       id: 3,
       author: "Davika Hoorne",
-      avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+      avatar: profileImageUrl,
       text: "Lub d Bangkok Silom is amazing for social travelers! They have communal spaces and organize events. Also check out Here Hostel and Yard Hostel - both have great vibes and you'll meet lots of people.",
       likeCount: 5,
       endorseCount: 3,
@@ -87,6 +93,7 @@ const answersData = {
 
 const QuestionPreview = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { questionId } = useParams();
   const { toast } = useToast();
   const [following, setFollowing] = useState(false);
@@ -97,6 +104,22 @@ const QuestionPreview = () => {
   
   // Fetch question and answers data
   useEffect(() => {
+    // First try to get question from location state (when coming from Ask Question page)
+    if (location.state?.question) {
+      const newQuestion = {
+        id: Number(questionId),
+        avatar: profileImageUrl,
+        text: location.state.question.text,
+        tags: location.state.question.tags.map((tag: string) => ({ name: tag })),
+        answers: 0,
+        following: 0
+      };
+      setQuestion(newQuestion);
+      setAnswers([]);
+      return;
+    }
+    
+    // If not from state, try to find in sample data
     const id = Number(questionId);
     const foundQuestion = questionsData.find(q => q.id === id);
     
@@ -104,11 +127,15 @@ const QuestionPreview = () => {
       setQuestion(foundQuestion);
       setAnswers(answersData[id as keyof typeof answersData] || []);
     } else {
-      // If question not found, try to get it from location state
-      // This handles the case when coming from AskQuestion page
+      // If question not found, go to home
       navigate("/");
+      toast({
+        title: "Question not found",
+        description: "The question you're looking for doesn't exist.",
+        variant: "destructive",
+      });
     }
-  }, [questionId, navigate]);
+  }, [questionId, navigate, location.state, toast]);
 
   // Handle going back
   const handleBack = () => {
@@ -173,7 +200,7 @@ const QuestionPreview = () => {
           </div>
           
           <Avatar className="h-8 w-8">
-            <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" />
+            <AvatarImage src={profileImageUrl} alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
         </div>
@@ -194,7 +221,7 @@ const QuestionPreview = () => {
         
         {/* Stats */}
         <div className="flex items-center justify-between mb-2">
-          <span className="text-gray-500">{answers.length} Answers</span>
+          <span className="text-gray-500">{answers.length} Answer{answers.length !== 1 ? 's' : ''}</span>
           <Button 
             variant="outline"
             className={`rounded-full border px-4 py-1 h-auto flex items-center gap-2 ${
@@ -208,52 +235,68 @@ const QuestionPreview = () => {
         </div>
       </div>
       
-      {/* Answers section */}
-      <div className="mb-20">
-        {answers.map((answer) => (
-          <div key={answer.id} className="px-4 py-4 border-b border-gray-200">
-            {/* Answer author info */}
-            <div className="flex items-center mb-2">
-              <Avatar className="h-10 w-10 mr-3">
-                <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt={answer.author} />
-                <AvatarFallback>{answer.author[0]}</AvatarFallback>
-              </Avatar>
-              <div>
-                <div className="font-medium">{answer.author}</div>
-                <div className="text-xs text-gray-500">Lived in Bangkok for {answer.yearsInLocation} years</div>
+      {/* Answers section or invite experts section */}
+      {answers.length > 0 ? (
+        <div className="mb-20">
+          {answers.map((answer) => (
+            <div key={answer.id} className="px-4 py-4 border-b border-gray-200">
+              {/* Answer author info */}
+              <div className="flex items-center mb-2">
+                <Avatar className="h-10 w-10 mr-3">
+                  <AvatarImage src={answer.avatar} alt={answer.author} />
+                  <AvatarFallback>{answer.author[0]}</AvatarFallback>
+                </Avatar>
+                <div>
+                  <div className="font-medium">{answer.author}</div>
+                  <div className="text-xs text-gray-500">Lived in Bangkok for {answer.yearsInLocation} years</div>
+                </div>
+              </div>
+              
+              {/* Answer text */}
+              <p className="text-sm mb-4">{answer.text}</p>
+              
+              {/* Answer actions */}
+              <div className="flex items-center gap-4">
+                <button 
+                  className={`flex items-center gap-1 text-sm ${likes[answer.id] ? 'text-orange-500' : 'text-gray-500'}`}
+                  onClick={() => handleLike(answer.id)}
+                >
+                  <Heart className="h-4 w-4" fill={likes[answer.id] ? "currentColor" : "none"} />
+                  <span>{likes[answer.id] ? answer.likeCount + 1 : answer.likeCount}</span>
+                </button>
+                
+                <button 
+                  className={`flex items-center gap-1 text-sm ${endorsements[answer.id] ? 'text-orange-500' : 'text-gray-500'}`}
+                  onClick={() => handleEndorse(answer.id)}
+                >
+                  <ThumbsUp className="h-4 w-4" fill={endorsements[answer.id] ? "currentColor" : "none"} />
+                  <span>{endorsements[answer.id] ? answer.endorseCount + 1 : answer.endorseCount}</span>
+                </button>
               </div>
             </div>
-            
-            {/* Answer text */}
-            <p className="text-sm mb-4">{answer.text}</p>
-            
-            {/* Answer actions */}
-            <div className="flex items-center gap-4">
-              <button 
-                className={`flex items-center gap-1 text-sm ${likes[answer.id] ? 'text-orange-500' : 'text-gray-500'}`}
-                onClick={() => handleLike(answer.id)}
-              >
-                <Heart className="h-4 w-4" fill={likes[answer.id] ? "currentColor" : "none"} />
-                <span>{likes[answer.id] ? answer.likeCount + 1 : answer.likeCount}</span>
-              </button>
-              
-              <button 
-                className={`flex items-center gap-1 text-sm ${endorsements[answer.id] ? 'text-orange-500' : 'text-gray-500'}`}
-                onClick={() => handleEndorse(answer.id)}
-              >
-                <ThumbsUp className="h-4 w-4" fill={endorsements[answer.id] ? "currentColor" : "none"} />
-                <span>{endorsements[answer.id] ? answer.endorseCount + 1 : answer.endorseCount}</span>
+          ))}
+        </div>
+      ) : (
+        <div className="px-4 py-4">
+          <h2 className="font-semibold text-lg mb-4">Invite locals to answer</h2>
+          {localExperts.map((expert) => (
+            <div key={expert.id} className="flex items-center justify-between py-3">
+              <div className="flex items-center">
+                <Avatar className="h-10 w-10 mr-3">
+                  <AvatarImage src={expert.avatar} alt={expert.name} />
+                  <AvatarFallback>{expert.name[0]}</AvatarFallback>
+                </Avatar>
+                <div className="font-medium">{expert.name}</div>
+              </div>
+              <button className="text-orange-400">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+                </svg>
               </button>
             </div>
-          </div>
-        ))}
-        
-        {answers.length === 0 && (
-          <div className="px-4 py-8 text-center text-gray-500">
-            No answers yet. Be the first to answer!
-          </div>
-        )}
-      </div>
+          ))}
+        </div>
+      )}
       
       {/* Write an answer button */}
       <div className="fixed bottom-8 left-0 w-full flex justify-center">
