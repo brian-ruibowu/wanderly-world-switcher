@@ -2,7 +2,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ArrowLeft } from "lucide-react";
 import BottomNavigation from '../components/BottomNavigation';
 
 interface Answer {
@@ -68,8 +67,8 @@ const Inbox: React.FC = () => {
     navigate(`/question/${questionId}`);
   };
   
-  const handleBack = () => {
-    navigate(-1);
+  const handleTabChange = (tab: string) => {
+    console.log('Tab changed to:', tab);
   };
 
   return (
@@ -134,7 +133,7 @@ const Inbox: React.FC = () => {
       </div>
       
       {/* Bottom Navigation */}
-      <BottomNavigation activeTab="my_questions" onTabChange={() => {}} />
+      <BottomNavigation activeTab="my_questions" onTabChange={handleTabChange} />
     </div>
   );
 };
