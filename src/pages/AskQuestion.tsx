@@ -77,18 +77,24 @@ const AskQuestion = () => {
           <X className="h-6 w-6" />
         </button>
         
-        <div className="flex items-center gap-3">
-          <div className="bg-orange-100 text-orange-dark rounded-full flex items-center px-2 py-1">
-            <span className="text-sm font-semibold">95</span>
-            <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
+        <div className="flex flex-col items-end">
+          <div className="flex items-center gap-3">
+            <div className="bg-orange-100 text-orange-dark rounded-full flex items-center px-2 py-1">
+              <span className="text-sm font-semibold">95</span>
+              <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
+            </div>
+            
+            <Button 
+              onClick={handlePost}
+              className="bg-orange-400 hover:bg-orange-500 text-white rounded-full px-4"
+            >
+              Post
+            </Button>
           </div>
-          
-          <Button 
-            onClick={handlePost}
-            className="bg-orange-400 hover:bg-orange-500 text-white rounded-full px-4"
-          >
-            Post
-          </Button>
+          <div className="text-xs text-gray-500 mt-1 flex items-center">
+            <span className="inline-block w-1 h-1 rounded-full bg-gray-400 mr-1"></span>
+            <span>5 needed</span>
+          </div>
         </div>
       </div>
       
@@ -101,10 +107,6 @@ const AskQuestion = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </Button>
-        </div>
-        <div className="text-xs text-gray-500 mt-1 flex items-center">
-          <span className="inline-block w-1 h-1 rounded-full bg-gray-400 mr-1"></span>
-          <span>5 needed</span>
         </div>
       </div>
       
