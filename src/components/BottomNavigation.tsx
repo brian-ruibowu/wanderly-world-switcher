@@ -60,14 +60,14 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
 
       <div className="flex flex-col items-center justify-center relative">
         <button 
-          className="absolute -top-5 transform -translate-y-1/2 bg-orange-400 rounded-full p-3"
+          className="absolute -top-3 transform -translate-y-1/2 bg-orange-400 rounded-full p-3"
           onClick={handleAskClick}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </button>
-        <span className="text-[10px] mt-6">Ask</span>
+        <span className="text-[10px] mt-8">Ask</span>
       </div>
       
       <button 
