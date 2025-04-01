@@ -6,7 +6,7 @@ import QuestionsList from '../components/QuestionsList';
 import ExploreSections from '../components/ExploreSections';
 import UpcomingEvents from '../components/UpcomingEvents';
 import BottomNavigation from '../components/BottomNavigation';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 // Sample data for questions
 const questionsList = [
@@ -46,8 +46,8 @@ const questionsList = [
     id: 5,
     avatar: '/lovable-uploads/90ed1c81-29ee-43b4-b53a-17c8e25238f0.png',
     text: 'Are there any good vegan restaurants in Bangkok?',
-    tags: [{ name: 'food' }, { name: 'vegan' }],
-    answers: 12,
+    tags: [{ name: 'food' }, { name: 'vegan' }, { name: 'restaurants' }],
+    answers: 2,
     following: 24
   }
 ];
@@ -82,23 +82,11 @@ const Index = () => {
     });
   };
 
-  // Handle question click
-  const handleQuestionClick = (id: number) => {
-    const question = questionsList.find(q => q.id === id);
-    if (question) {
-      toast({
-        title: "Question selected",
-        description: question.text,
-        duration: 2000,
-      });
-    }
-  };
-
   return (
     <div className="max-w-md mx-auto bg-gray-50 min-h-screen pb-16">
       <Header selectedCountry={selectedCountry} onCountryChange={handleCountryChange} />
       <SearchBar selectedCountry={selectedCountry} />
-      <QuestionsList questions={questionsList} onQuestionClick={handleQuestionClick} />
+      <QuestionsList questions={questionsList} />
       <ExploreSections selectedCountry={selectedCountry} />
       <UpcomingEvents selectedCountry={selectedCountry} events={eventsList} />
       <BottomNavigation activeTab={activeTab} onTabChange={setActiveTab} />

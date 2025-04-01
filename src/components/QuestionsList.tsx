@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Tag {
   name: string;
@@ -17,17 +18,22 @@ interface Question {
 
 interface QuestionsListProps {
   questions: Question[];
-  onQuestionClick: (id: number) => void;
 }
 
-const QuestionsList: React.FC<QuestionsListProps> = ({ questions, onQuestionClick }) => {
+const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
+  const navigate = useNavigate();
+  
+  const handleQuestionClick = (questionId: number) => {
+    navigate(`/question/${questionId}`);
+  };
+  
   return (
     <div className="space-y-3 px-4">
       {questions.map((question) => (
         <div 
           key={question.id} 
           className="bg-white rounded-lg p-4 shadow-sm cursor-pointer"
-          onClick={() => onQuestionClick(question.id)}
+          onClick={() => handleQuestionClick(question.id)}
         >
           <div className="flex items-start">
             <div className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0">
