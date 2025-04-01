@@ -5,7 +5,13 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { X, Search, Image, Hash, Link2 } from "lucide-react";
+import { X, Search, Image, Hash, Link2, ChevronDown } from "lucide-react";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 // Define available tags
 const availableTags = [
@@ -18,6 +24,8 @@ const availableTags = [
   "travel plan", 
   "shopping"
 ];
+
+const countries = ["Bangkok", "Tokyo", "New York", "Paris", "London", "Rome", "Berlin"];
 
 const AskQuestion = () => {
   const navigate = useNavigate();
@@ -32,6 +40,11 @@ const AskQuestion = () => {
     navigate(-1);
   };
   
+  // Handle location change
+  const handleLocationChange = (location: string) => {
+    setLocation(location);
+  };
+  
   // Handle posting the question
   const handlePost = () => {
     if (!question.trim()) {
@@ -44,7 +57,7 @@ const AskQuestion = () => {
     }
     
     // Navigate to the question preview page with the question data
-    navigate('/question', { 
+    navigate(`/question/${Math.floor(Math.random() * 1000)}`, { 
       state: { 
         question: {
           text: question,
@@ -91,22 +104,33 @@ const AskQuestion = () => {
               Post
             </Button>
           </div>
-          <div className="text-xs text-gray-500 mt-1 flex items-center">
-            <span className="inline-block w-1 h-1 rounded-full bg-gray-400 mr-1"></span>
-            <span>5 needed</span>
-          </div>
+          <div className="text-xs text-gray-500 mt-1">5 needed</div>
         </div>
       </div>
       
       {/* Location selector */}
       <div className="px-4 py-3">
-        <div className="inline-block">
-          <Button variant="outline" className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-1 h-auto">
-            {location}
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-            </svg>
-          </Button>
+        <div className="flex items-center">
+          <span className="text-sm font-medium mr-2">I'm going to</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="flex items-center gap-1 rounded-full border border-gray-300 px-4 py-1 h-9">
+                {location}
+                <ChevronDown className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="bg-white">
+              {countries.map((country) => (
+                <DropdownMenuItem 
+                  key={country}
+                  onClick={() => handleLocationChange(country)}
+                  className="cursor-pointer"
+                >
+                  {country}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       
