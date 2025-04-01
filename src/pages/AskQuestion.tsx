@@ -102,11 +102,9 @@ const AskQuestion = () => {
             </svg>
           </Button>
         </div>
-        <div className="text-xs text-gray-500 mt-1">
-          <span className="inline-flex items-center">
-            <span className="inline-block w-1 h-1 rounded-full bg-gray-400 mr-1"></span>
-            5 needed
-          </span>
+        <div className="text-xs text-gray-500 mt-1 flex items-center">
+          <span className="inline-block w-1 h-1 rounded-full bg-gray-400 mr-1"></span>
+          <span>5 needed</span>
         </div>
       </div>
       
@@ -125,13 +123,20 @@ const AskQuestion = () => {
         <div className="flex items-center mb-2">
           <span className="text-gray-700 mr-2">Add tags:</span>
           <div className="relative flex-1">
-            <Input
-              placeholder="# Search tags"
-              className="rounded-full pl-8 pr-4 border-gray-300"
-              value={searchTag}
-              onChange={(e) => setSearchTag(e.target.value)}
-            />
-            <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            <div className="relative">
+              <Input
+                placeholder="# Search tags"
+                className="rounded-full pl-8 pr-8 border-gray-300"
+                value={searchTag}
+                onChange={(e) => setSearchTag(e.target.value)}
+              />
+              <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                <div className="rounded-full h-5 w-5 flex items-center justify-center bg-orange-50 text-orange-400">
+                  <Search className="h-3 w-3" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         
@@ -153,22 +158,19 @@ const AskQuestion = () => {
         </div>
       </div>
       
-      {/* Bottom toolbar */}
-      <div className="fixed bottom-0 left-0 w-full bg-gray-100 border-t border-gray-200">
-        <div className="flex justify-around items-center py-3 px-4">
-          <button className="p-2">
+      {/* Fixed bottom toolbar */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+        <div className="flex justify-around items-center py-3">
+          <button className="p-2 flex items-center justify-center">
             <Image className="h-6 w-6 text-gray-600" />
           </button>
-          <button className="p-2">
+          <button className="p-2 flex items-center justify-center">
             <Hash className="h-6 w-6 text-gray-600" />
           </button>
-          <button className="p-2">
+          <button className="p-2 flex items-center justify-center">
             <Link2 className="h-6 w-6 text-gray-600" />
           </button>
         </div>
-        
-        {/* Keyboard (just for UI representation) */}
-        <div className="h-12 bg-gray-300"></div>
       </div>
     </div>
   );
