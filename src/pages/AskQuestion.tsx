@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { X, Search, Image, Hash, Link2, Globe, Mic } from "lucide-react";
+import { X, Search, Image, Hash, Link2 } from "lucide-react";
 
 // Define available tags
 const availableTags = [
@@ -14,6 +14,7 @@ const availableTags = [
   "traffic", 
   "music festival", 
   "food", 
+  "street food", 
   "travel plan", 
   "shopping"
 ];
@@ -24,6 +25,7 @@ const AskQuestion = () => {
   const [question, setQuestion] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchTag, setSearchTag] = useState('');
+  const [location, setLocation] = useState('Bangkok');
   
   // Handle going back to the previous page
   const handleBack = () => {
@@ -41,12 +43,21 @@ const AskQuestion = () => {
       return;
     }
     
+    // Navigate to the question preview page with the question data
+    navigate('/question', { 
+      state: { 
+        question: {
+          text: question,
+          tags: selectedTags,
+          location: location
+        } 
+      } 
+    });
+    
     toast({
       title: "Question posted",
       description: "Your question has been successfully posted!",
     });
-    
-    navigate('/');
   };
   
   // Handle tag selection
@@ -85,7 +96,7 @@ const AskQuestion = () => {
       <div className="px-4 py-3">
         <div className="inline-block">
           <Button variant="outline" className="flex items-center gap-2 rounded-full border border-gray-300 px-4 py-1 h-auto">
-            Bangkok
+            {location}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
