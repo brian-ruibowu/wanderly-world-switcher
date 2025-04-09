@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import AskQuestion from "./pages/AskQuestion";
 import QuestionPreview from "./pages/QuestionPreview";
 import Inbox from "./pages/Inbox";
+import Chat from "./pages/Chat";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/ask" element={<AskQuestion />} />
           <Route path="/question/:questionId" element={<QuestionPreview />} />
           <Route path="/inbox" element={<Inbox />} />
+          <Route path="/chat" element={<Chat />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
