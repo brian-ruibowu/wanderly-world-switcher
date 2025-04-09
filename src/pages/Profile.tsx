@@ -36,8 +36,8 @@ const Profile = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen">
-      <div className="relative bg-white overflow-hidden">
+    <div className="flex justify-center items-start pt-8 min-h-screen bg-gray-50">
+      <div className="w-full max-w-md mx-auto bg-white rounded-xl shadow-sm overflow-hidden relative">
         {/* Close button */}
         <button 
           onClick={handleClose}
@@ -47,15 +47,15 @@ const Profile = () => {
         </button>
         
         {/* Profile header */}
-        <div className="flex flex-col items-center pt-8 pb-6 border-b">
-          <Avatar className="h-24 w-24 mb-4">
+        <div className="flex flex-col items-center pt-8 pb-4 border-b">
+          <Avatar className="h-20 w-20 mb-3">
             <AvatarImage src={profileData.avatarUrl} alt={profileData.name} />
             <AvatarFallback>{profileData.name.charAt(0)}</AvatarFallback>
           </Avatar>
           
-          <h1 className="text-2xl font-bold mb-2">{profileData.name}</h1>
+          <h1 className="text-xl font-bold mb-1">{profileData.name}</h1>
           
-          <div className="flex items-center gap-1 mb-6">
+          <div className="flex items-center gap-1 mb-4">
             <div className="bg-orange-100 text-orange-dark rounded-full flex items-center px-2 py-1">
               <span className="text-sm font-semibold">{profileData.points}</span>
               <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
@@ -63,68 +63,73 @@ const Profile = () => {
           </div>
           
           {/* Stats */}
-          <div className="flex w-full px-16 justify-between mb-4">
+          <div className="flex w-full px-16 justify-between mb-3">
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold">{profileData.stats.questions}</span>
-              <span className="text-gray-500">Questions</span>
+              <span className="text-xl font-bold">{profileData.stats.questions}</span>
+              <span className="text-gray-500 text-sm">Questions</span>
             </div>
             <div className="flex flex-col items-center">
-              <span className="text-2xl font-bold">{profileData.stats.answers}</span>
-              <span className="text-gray-500">Answers</span>
+              <span className="text-xl font-bold">{profileData.stats.answers}</span>
+              <span className="text-gray-500 text-sm">Answers</span>
             </div>
           </div>
           
           {/* Edit Profile Button */}
           <Button 
             variant="outline" 
-            className="rounded-full border px-6"
+            className="rounded-full border px-6 py-1 h-auto mb-2"
+            size="sm"
           >
-            <Edit className="h-4 w-4 mr-2" />
+            <Edit className="h-4 w-4 mr-1" />
             Edit Profile
           </Button>
         </div>
         
-        {/* Profile details */}
-        <div className="px-6 py-4">
-          <h2 className="text-xl font-bold mb-2">About Me</h2>
-          <p className="text-gray-800 mb-6">{profileData.about}</p>
-          
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-3">From</h2>
-            <div className="flex items-center">
-              <span className="mr-2">{profileData.from.flag}</span>
-              <span>{profileData.from.city}, {profileData.from.country}</span>
+        {/* Profile details - more compact layout */}
+        <div className="px-6 py-3">
+          <div className="space-y-4">
+            <div>
+              <h2 className="text-lg font-bold mb-1">About Me</h2>
+              <p className="text-gray-800 text-sm">{profileData.about}</p>
             </div>
-          </div>
-          
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-3">Expert In</h2>
-            <div className="flex flex-wrap gap-2">
-              {profileData.expertIn.map((location, index) => (
-                <Badge 
-                  key={index} 
-                  variant="outline" 
-                  className="rounded-full px-4 py-2 border-gray-300 text-gray-800 text-sm font-normal"
-                >
-                  {location}
-                </Badge>
-              ))}
+            
+            <div>
+              <h2 className="text-lg font-bold mb-1">From</h2>
+              <div className="flex items-center">
+                <span className="mr-2">{profileData.from.flag}</span>
+                <span className="text-sm">{profileData.from.city}, {profileData.from.country}</span>
+              </div>
             </div>
-          </div>
-          
-          <div className="mb-6">
-            <h2 className="text-xl font-bold mb-3">Upcoming Trips</h2>
-            <div className="flex flex-wrap gap-2">
-              {profileData.upcomingTrips.map((trip, index) => (
-                <Badge 
-                  key={index} 
-                  variant="outline" 
-                  className="rounded-full px-4 py-2 border-gray-300 text-gray-800 flex items-center"
-                >
-                  <span>{trip.destination}</span>
-                  <span className="text-gray-500 ml-2 text-xs">{trip.date}</span>
-                </Badge>
-              ))}
+            
+            <div>
+              <h2 className="text-lg font-bold mb-1">Expert In</h2>
+              <div className="flex flex-wrap gap-2">
+                {profileData.expertIn.map((location, index) => (
+                  <Badge 
+                    key={index} 
+                    variant="outline" 
+                    className="rounded-full px-3 py-1 border-gray-300 text-gray-800 text-xs font-normal"
+                  >
+                    {location}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+            
+            <div className="pb-4">
+              <h2 className="text-lg font-bold mb-1">Upcoming Trips</h2>
+              <div className="flex flex-wrap gap-2">
+                {profileData.upcomingTrips.map((trip, index) => (
+                  <Badge 
+                    key={index} 
+                    variant="outline" 
+                    className="rounded-full px-3 py-1 border-gray-300 text-gray-800 flex items-center text-xs"
+                  >
+                    <span>{trip.destination}</span>
+                    <span className="text-gray-500 ml-1 text-xs">{trip.date}</span>
+                  </Badge>
+                ))}
+              </div>
             </div>
           </div>
         </div>
