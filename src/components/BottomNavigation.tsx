@@ -31,6 +31,9 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
       case 'chat':
         navigate('/chat');
         break;
+      case 'profile':
+        navigate('/profile');
+        break;
       default:
         break;
     }
@@ -60,7 +63,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
 
       <div className="flex flex-col items-center justify-center relative">
         <button 
-          className="absolute -top-5 transform -translate-y-1/2 bg-orange-400 rounded-full p-3"
+          className="absolute -top-8 transform -translate-y-1/2 bg-orange-400 rounded-full p-3"
           onClick={handleAskClick}
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
