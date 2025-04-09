@@ -20,10 +20,10 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
     
     switch(tab) {
       case 'home':
-        navigate('/');
+        navigate('/home');
         break;
       case 'help':
-        // Navigate to help page when implemented
+        navigate('/');
         break;
       case 'my_questions':
         navigate('/inbox');
@@ -42,7 +42,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 grid grid-cols-5 py-2">
       <button 
-        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'home' || location.pathname === '/' ? 'text-orange-400' : 'text-gray-500'}`}
+        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'home' || location.pathname === '/home' ? 'text-orange-400' : 'text-gray-500'}`}
         onClick={() => handleTabClick('home')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -52,7 +52,7 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({ activeTab, onTabCha
       </button>
       
       <button 
-        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'help' ? 'text-orange-400' : 'text-gray-500'}`}
+        className={`flex flex-col items-center justify-center p-2 ${activeTab === 'help' || location.pathname === '/' ? 'text-orange-400' : 'text-gray-500'}`}
         onClick={() => handleTabClick('help')}
       >
         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
