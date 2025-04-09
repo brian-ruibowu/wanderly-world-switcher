@@ -71,6 +71,10 @@ const Inbox: React.FC = () => {
     console.log('Tab changed to:', tab);
   };
 
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
   return (
     <div className="max-w-md mx-auto bg-white min-h-screen pb-16">
       {/* Header */}
@@ -85,7 +89,10 @@ const Inbox: React.FC = () => {
             <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
           </div>
           
-          <Avatar className="h-8 w-8">
+          <Avatar 
+            className="h-8 w-8 cursor-pointer" 
+            onClick={handleProfileClick}
+          >
             <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>

@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import BottomNavigation from '../components/BottomNavigation';
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useNavigate } from 'react-router-dom';
 
 interface ChatMessage {
   id: number;
@@ -49,6 +49,11 @@ const chatData: ChatMessage[] = [
 
 const Chat = () => {
   const [activeTab, setActiveTab] = useState('all');
+  const navigate = useNavigate();
+  
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
 
   return (
     <div className="max-w-md mx-auto bg-white min-h-screen pb-16 overflow-hidden">
@@ -62,7 +67,10 @@ const Chat = () => {
             <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
           </div>
           
-          <Avatar className="h-8 w-8">
+          <Avatar 
+            className="h-8 w-8 cursor-pointer"
+            onClick={handleProfileClick}
+          >
             <AvatarImage src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -142,6 +141,10 @@ const QuestionPreview = () => {
     navigate(-1);
   };
   
+  const handleProfileClick = () => {
+    navigate('/profile');
+  };
+
   // Handle following a question
   const handleFollowQuestion = () => {
     setFollowing(!following);
@@ -199,7 +202,10 @@ const QuestionPreview = () => {
             <span className="ml-1 bg-orange-400 h-5 w-5 rounded-full flex items-center justify-center text-white text-xs">🏆</span>
           </div>
           
-          <Avatar className="h-8 w-8">
+          <Avatar 
+            className="h-8 w-8 cursor-pointer"
+            onClick={handleProfileClick}
+          >
             <AvatarImage src={profileImageUrl} alt="User" />
             <AvatarFallback>U</AvatarFallback>
           </Avatar>
