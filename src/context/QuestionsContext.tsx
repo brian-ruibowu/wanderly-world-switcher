@@ -31,7 +31,7 @@ export const QuestionsProvider: React.FC<{ children: ReactNode }> = ({ children 
       ...question,
       id: Date.now(),
       answers: 0,
-      following: Math.floor(Math.random() * 10) + 1, // Random number of followers
+      following: 0, // Changed from random number to 0
       createdAt: new Date(),
     };
     
@@ -52,3 +52,4 @@ export const useQuestions = (): QuestionsContextType => {
   }
   return context;
 };
+
