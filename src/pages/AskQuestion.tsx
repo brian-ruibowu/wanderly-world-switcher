@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
+import { useQuestions } from '@/context/QuestionsContext';
 
 // Define available tags
 const availableTags = [
@@ -30,6 +30,7 @@ const countries = ["Bangkok", "Tokyo", "New York", "Paris", "London", "Rome", "B
 const AskQuestion = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { addQuestion } = useQuestions();
   const [question, setQuestion] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchTag, setSearchTag] = useState('');
@@ -56,16 +57,17 @@ const AskQuestion = () => {
       return;
     }
     
-    // Navigate to the question preview page with the question data
-    navigate(`/question/${Math.floor(Math.random() * 1000)}`, { 
-      state: { 
-        question: {
-          text: question,
-          tags: selectedTags,
-          location: location
-        } 
-      } 
+    // Add question to our context
+    const tags = selectedTags.map(tag => ({ name: tag }));
+    addQuestion({
+      text: question,
+      tags: tags,
+      location: location,
+      isNew: true
     });
+    
+    // Navigate to inbox after posting
+    navigate('/inbox');
     
     toast({
       title: "Question posted",
