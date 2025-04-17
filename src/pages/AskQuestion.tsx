@@ -31,7 +31,8 @@ const AskQuestion = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { addQuestion } = useQuestions();
-  const [question, setQuestion] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [searchTag, setSearchTag] = useState('');
   const [location, setLocation] = useState('Bangkok');
@@ -48,26 +49,25 @@ const AskQuestion = () => {
   
   // Handle posting the question
   const handlePost = () => {
-    if (!question.trim()) {
+    if (!title.trim()) {
       toast({
         title: "Question required",
-        description: "Please enter your question before posting",
+        description: "Please enter your question title before posting",
         variant: "destructive",
       });
       return;
     }
     
     // Add question to our context
-    const tags = selectedTags.map(tag => ({ name: tag }));
-    addQuestion({
-      text: question,
-      tags: tags,
+    const questionId = addQuestion({
+      title: title,
+      description: description,
       location: location,
-      isNew: true
+      userName: "CurrentUser" // In a real app, this would come from authentication
     });
     
-    // Navigate to inbox after posting
-    navigate('/inbox');
+    // Navigate to question detail page after posting
+    navigate(`/question/${questionId}`);
     
     toast({
       title: "Question posted",
@@ -139,10 +139,16 @@ const AskQuestion = () => {
       {/* Question input */}
       <div className="px-4 py-2">
         <Textarea
-          placeholder="Question"
-          className="w-full border-0 text-xl focus-visible:ring-0 p-0 resize-none h-32"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Question title"
+          className="w-full border-0 text-xl focus-visible:ring-0 p-0 resize-none h-12 mb-4"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <Textarea
+          placeholder="Add more details about your question (optional)"
+          className="w-full border-0 text-base focus-visible:ring-0 p-0 resize-none h-24"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
         />
       </div>
       

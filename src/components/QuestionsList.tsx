@@ -1,21 +1,8 @@
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-
-interface Tag {
-  name: string;
-  color?: string;
-}
-
-interface Question {
-  id: number;
-  avatar: string;
-  text: string;
-  tags: Tag[];
-  answers: number;
-  following: number;
-}
+import { Question } from '@/types';
+import { formatDistanceToNow } from 'date-fns';
 
 interface QuestionsListProps {
   questions: Question[];
@@ -24,7 +11,7 @@ interface QuestionsListProps {
 const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
   const navigate = useNavigate();
   
-  const handleQuestionClick = (questionId: number) => {
+  const handleQuestionClick = (questionId: string) => {
     navigate(`/question/${questionId}`);
   };
   
@@ -42,29 +29,20 @@ const QuestionsList: React.FC<QuestionsListProps> = ({ questions }) => {
               <AvatarFallback>U</AvatarFallback>
             </Avatar>
             <div className="flex-grow">
-              <p className="text-sm font-medium mb-2">{question.text}</p>
+              <p className="text-sm font-medium mb-2">{question.title}</p>
+              <p className="text-xs text-gray-600 mb-2">{question.description.length > 100 
+                ? `${question.description.substring(0, 100)}...` 
+                : question.description}</p>
+              
               <div className="flex flex-wrap gap-2 mb-2">
-                {question.tags.map((tag, index) => (
-                  <span 
-                    key={index} 
-                    className={`text-xs px-2 py-1 rounded-full ${
-                      tag.name === 'hostel' || tag.name === 'accommodation' 
-                        ? 'bg-green-100 text-green-800'
-                        : tag.name === 'transportation' 
-                        ? 'bg-blue-100 text-blue-800'
-                        : tag.name === 'event' || tag.name === 'music festival'
-                        ? 'bg-purple-100 text-purple-800'
-                        : tag.name === 'food' || tag.name === 'vegan'
-                        ? 'bg-yellow-100 text-yellow-800'
-                        : 'bg-gray-100 text-gray-800'
-                    }`}
-                  >
-                    {tag.name}
-                  </span>
-                ))}
+                <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-800">
+                  {question.location}
+                </span>
               </div>
-              <div className="text-xs text-gray-500">
-                {question.answers} Answers · {question.following} following
+              
+              <div className="text-xs text-gray-500 flex justify-between">
+                <span>{question.answers?.length || 0} Answers</span>
+                <span>{formatDistanceToNow(new Date(question.createdAt))} ago</span>
               </div>
             </div>
           </div>
