@@ -9,7 +9,7 @@ const Inbox: React.FC = () => {
   const navigate = useNavigate();
   const { questions } = useQuestions();
   
-  const handleQuestionClick = (questionId: number) => {
+  const handleQuestionClick = (questionId: string) => {
     navigate(`/question/${questionId}`);
   };
   
@@ -21,11 +21,11 @@ const Inbox: React.FC = () => {
     navigate('/profile');
   };
 
-  // Sample notification data (keeping for backwards compatibility)
+  // Sample notification data
   const notificationsData = [
     {
       id: 1,
-      questionId: 6,
+      questionId: "1",
       questionText: 'Where can I find authentic, non-touristy street food in Bangkok?',
       type: 'answer',
       answer: {
@@ -39,7 +39,7 @@ const Inbox: React.FC = () => {
     },
     {
       id: 2,
-      questionId: 2,
+      questionId: "2",
       questionText: "What's the best way to get from the airport to downtown Bangkok at night?",
       type: 'answer',
       answer: {
@@ -53,12 +53,15 @@ const Inbox: React.FC = () => {
     },
     {
       id: 3,
-      questionId: 5,
+      questionId: "3",
       questionText: 'Are there any good vegan restaurants in Bangkok?',
       type: 'follow',
       isNew: false
     }
   ];
+
+  // Filter to show only the user's questions
+  const myQuestions = questions.filter(q => q.userName === "CurrentUser");
 
   return (
     <div className="max-w-md mx-auto bg-white min-h-screen pb-16">
@@ -85,48 +88,30 @@ const Inbox: React.FC = () => {
       </div>
       
       {/* My Questions Section */}
-      {questions.length > 0 && (
+      {myQuestions.length > 0 && (
         <div className="mt-4 px-4">
           <h2 className="text-lg font-semibold mb-2">My Questions</h2>
           <div className="space-y-4">
-            {questions.map((question) => (
+            {myQuestions.map((question) => (
               <div 
                 key={question.id} 
                 className="bg-white rounded-lg p-4 shadow-sm cursor-pointer border border-gray-100"
                 onClick={() => handleQuestionClick(question.id)}
               >
-                {question.isNew && (
-                  <div className="text-sm font-medium text-orange-500 mb-2">
-                    Awaiting answers
-                  </div>
-                )}
-                
-                <p className="text-sm font-medium mb-3">{question.text}</p>
+                <p className="text-sm font-medium mb-3">{question.title}</p>
+                <p className="text-xs text-gray-600 mb-3">{question.description}</p>
                 
                 <div className="flex flex-wrap gap-2 mb-2">
-                  {question.tags.map((tag, index) => (
-                    <span 
-                      key={index} 
-                      className={`text-xs px-2 py-1 rounded-full ${
-                        tag.name === 'hotel' || tag.name === 'accommodation' 
-                          ? 'bg-green-100 text-green-800'
-                          : tag.name === 'traffic' || tag.name === 'transportation' 
-                          ? 'bg-blue-100 text-blue-800'
-                          : tag.name === 'event' || tag.name === 'music festival'
-                          ? 'bg-purple-100 text-purple-800'
-                          : tag.name === 'food' || tag.name === 'street food' || tag.name === 'vegan'
-                          ? 'bg-yellow-100 text-yellow-800'
-                          : 'bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
+                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-800">
+                    {question.location}
+                  </span>
                 </div>
                 
                 <div className="text-xs text-gray-500 flex justify-between">
-                  <span>{question.answers} Answers · {question.following} following</span>
-                  <span>{format(question.createdAt, 'MMM d, yyyy')}</span>
+                  <span>
+                    {question.answers?.length || 0} Answers
+                  </span>
+                  <span>{format(new Date(question.createdAt), 'MMM d, yyyy')}</span>
                 </div>
               </div>
             ))}
@@ -180,7 +165,7 @@ const Inbox: React.FC = () => {
       )}
       
       {/* Empty state if no questions or notifications */}
-      {questions.length === 0 && notificationsData.length === 0 && (
+      {myQuestions.length === 0 && notificationsData.length === 0 && (
         <div className="flex flex-col items-center justify-center h-[50vh] px-4">
           <div className="text-gray-400 mb-4 text-center">
             <div className="text-5xl mb-4">📝</div>

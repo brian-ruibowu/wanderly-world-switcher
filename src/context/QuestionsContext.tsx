@@ -1,45 +1,81 @@
-
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-
-interface Tag {
-  name: string;
-}
-
-export interface Question {
-  id: number;
-  text: string;
-  tags: Tag[];
-  location: string;
-  answers: number;
-  following: number;
-  isNew?: boolean;
-  createdAt: Date;
-}
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { Question, Answer } from '@/types';
+import { mockQuestions } from '@/data/questions';
+import { mockAnswers } from '@/data/answers';
 
 interface QuestionsContextType {
   questions: Question[];
-  addQuestion: (question: Omit<Question, 'id' | 'answers' | 'following' | 'createdAt'>) => void;
+  answers: Answer[];
+  addQuestion: (question: Omit<Question, 'id' | 'createdAt'>) => string;
+  addAnswer: (answer: Omit<Answer, 'id' | 'createdAt' | 'likes'>) => void;
+  getQuestionById: (id: string) => Question | undefined;
+  getAnswersForQuestion: (questionId: string) => Answer[];
+  likeAnswer: (answerId: string) => void;
 }
 
 const QuestionsContext = createContext<QuestionsContextType | undefined>(undefined);
 
 export const QuestionsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [answers, setAnswers] = useState<Answer[]>([]);
 
-  const addQuestion = (question: Omit<Question, 'id' | 'answers' | 'following' | 'createdAt'>) => {
+  // Initialize with mock data
+  useEffect(() => {
+    setQuestions(mockQuestions);
+    setAnswers(mockAnswers);
+  }, []);
+
+  const addQuestion = (question: Omit<Question, 'id' | 'createdAt'>): string => {
+    const id = Date.now().toString();
     const newQuestion: Question = {
       ...question,
-      id: Date.now(),
-      answers: 0,
-      following: 0, // Changed from random number to 0
-      createdAt: new Date(),
+      id,
+      createdAt: new Date().toISOString(),
     };
     
     setQuestions(prevQuestions => [newQuestion, ...prevQuestions]);
+    return id;
+  };
+
+  const addAnswer = (answer: Omit<Answer, 'id' | 'createdAt' | 'likes'>) => {
+    const newAnswer: Answer = {
+      ...answer,
+      id: Date.now().toString(),
+      createdAt: new Date().toISOString(),
+      likes: 0,
+    };
+    
+    setAnswers(prevAnswers => [newAnswer, ...prevAnswers]);
+  };
+
+  const getQuestionById = (id: string) => {
+    return questions.find(question => question.id === id);
+  };
+
+  const getAnswersForQuestion = (questionId: string) => {
+    return answers.filter(answer => answer.questionId === questionId);
+  };
+
+  const likeAnswer = (answerId: string) => {
+    setAnswers(prevAnswers => 
+      prevAnswers.map(answer => 
+        answer.id === answerId 
+          ? { ...answer, likes: answer.likes + 1 } 
+          : answer
+      )
+    );
   };
 
   return (
-    <QuestionsContext.Provider value={{ questions, addQuestion }}>
+    <QuestionsContext.Provider value={{ 
+      questions, 
+      answers, 
+      addQuestion, 
+      addAnswer, 
+      getQuestionById, 
+      getAnswersForQuestion,
+      likeAnswer
+    }}>
       {children}
     </QuestionsContext.Provider>
   );
